@@ -22,6 +22,12 @@ import Control.Monad.Eff (Eff, kind Effect)
 import Data.Function.Uncurried (Fn3, Fn2, runFn3, runFn2)
 import Data.Maybe (Maybe(..))
 
+-- | Requires a `window` object, usually provided by a browser. 
+-- | 
+-- | For running purescript tests, see
+-- | <https://github.com/joneshf/purescript-webstorage/issues/13#issuecomment-408285337>.
+-- | Briefly: depend on a javascript library that simulates the `window` object,
+-- | add a `test/Main.js` module, use a `foreign import`.
 foreign import data WEB_STORAGE :: Effect
 type EffWebStorage eff = Eff (webStorage :: WEB_STORAGE | eff)
 
