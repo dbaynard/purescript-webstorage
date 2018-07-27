@@ -5,6 +5,38 @@
 
 Module documentation is [published on Pursuit](http://pursuit.purescript.org/packages/purescript-webstorage).
 
+## Running tests
+
+This package only supports browsers.
+This means that `pulp test` will complain.
+To allow tests to run with `pulp test` try the following:
+
+1.  Run the following to add a mocking library (other libraries are available) to npm devDependencies (or equivalent).
+
+```
+> npm install --save-dev mock-local-storage
+```
+
+2.  Add the following line into `test/Main.purs`
+
+```purescript
+foreign import mockStorage :: forall eff . Eff eff Unit
+```
+
+3.  Add a file `test/Main.js` with the following contents (or combine the following with an existing `test/Main.js`)
+    
+```javascript
+"use strict"
+
+global.window = {};
+const localStorage = require('mock-local-storage');
+window.localStorage = global.localStorage;
+
+exports.mockStorage = function() {
+    return window;  
+}
+```
+
 ## Releases
 
 New versions are published when CI succeeds on a tag.
